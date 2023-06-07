@@ -128,19 +128,19 @@ document.querySelector('#restart-btn').addEventListener('click', function () {
     return false;
 });
 
-// Define a plaayer class
-class Player {
-    constructor(color) {
-        this.color = color; // Set the player's color
-    }
-}
+// // Define a plaayer class
+// class Player {
+//     constructor(color) {
+//         this.color = color; // Set the player's color
+//     }
+// }
 
-// Evewnt listeners for starting the game with player colors
-document.getElementById('start-game').addEventListener('click', () => {
-    let p1 = new Player(document.getElementById('p1-color').value); // Create player 1 with the color specified in the input field
-    let p2 = new Player(document.getElementById('p2-color').value); // Create player 2 with the color specified in the input field
-    new Game(p1, p2); // Create a new game instance with the two players
-});
+// // Evewnt listeners for starting the game with player colors
+// document.getElementById('start-game').addEventListener('click', () => {
+//     let p1 = new Player(document.getElementById('p1-color').value); // Create player 1 with the color specified in the input field
+//     let p2 = new Player(document.getElementById('p2-color').value); // Create player 2 with the color specified in the input field
+//     new Game(p1, p2); // Create a new game instance with the two players
+// });
 
 makeBoard(); // Create the game board array
 makeHtmlBoard(); // Create the HTML representation of the game board
