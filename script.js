@@ -1,46 +1,34 @@
-/** Connect Four
- *
- * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- * column until a player gets four-in-a-row (horiz, vert, or diag) or until
- * board fills (tie)
- */
+/** Connect Four */
+// Declare constant variables for the width and height of the game board
+const WIDTH = 7; // The number of columns in the game board
+const HEIGHT = 6; // The number of rows in the game board
 
-const WIDTH = 7;
-const HEIGHT = 6;
 
-let currPlayer = 1; // active player: 1 or 2
-let board = []; // array of rows, each row is array of cells  (board[y][x])
+let currPlayer = 1; // Declare a variable to track the current player (1 or 2)
+let board = []; // Declare an empty array to represent the game board
 
-/** makeBoard: create in-JS board structure:
- *   board = array of rows, each row is array of cells  (board[y][x])
- */
 
-function makeBoard() {
+function makeBoard() { // Function to create the game board
     for (let y = 0; y < HEIGHT; y++) {
-        board.push(Array.from({ length: WIDTH }));
+        board.push(Array.from({ length: WIDTH }));  // Create an empty row for each height
     }
 }
 
-/** makeHtmlBoard: make HTML table and row of column tops. */
-
-function makeHtmlBoard() {
-    const board = document.getElementById('board');
-
-    // make column tops (clickable area for adding a piece to that column)
-    const top = document.createElement('tr');
+function makeHtmlBoard() { // Function to create the HTML representation of the game board
+    const board = document.getElementById('board');  // Get the game board element from the DOM
+    const top = document.createElement('tr'); // Create the top row for column selection
     top.setAttribute('id', 'column-top');
-    top.addEventListener('click', handleClick);
+    top.addEventListener('click', handleClick); // Add a click event listener to the top row
 
-    for (let x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) { // Create the cells for the top row (column selection)
         const headCell = document.createElement('td');
         headCell.setAttribute('id', x);
         top.append(headCell);
     }
 
-    board.append(top);
+    board.append(top); // Append the top row to the game board element
 
-    // make main part of board
-    for (let y = 0; y < HEIGHT; y++) {
+    for (let y = 0; y < HEIGHT; y++) { // Create the remaining rows and cells of the game board
         const row = document.createElement('tr');
 
         for (let x = 0; x < WIDTH; x++) {
@@ -52,8 +40,6 @@ function makeHtmlBoard() {
         board.append(row);
     }
 }
-
-/** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
     for (let y = HEIGHT - 1; y >= 0; y--) {
@@ -83,17 +69,14 @@ function endGame(msg) {
 
 /** handleClick: handle click of column top to play piece */
 
-function handleClick(evt) {
-    // get x from ID of clicked cell
-    const x = +evt.target.id;
-
-    // get next spot in column (if none, ignore click)
+function handleClick(evt) { // Function to handle the click event on the top row (column selection)
+    const x = +evt.target.id; // Get the selected column from the clicked cell's ID
     const y = findSpotForCol(x);
+
     if (y === null) {
         return;
     }
 
-    // place piece in board and add to HTML table
     board[y][x] = currPlayer;
     placeInTable(y, x);
 
@@ -151,6 +134,20 @@ document.querySelector('#restart-btn').addEventListener('click', function () {
     return false;
 });
 /* End Restart Button */
+//
+class Player {
+    constructor(color) {
+        this.color = color;
+    }
+}
 
+// Evewnt listeners for starting the game with player colors
+document.getElementById('start-game').addEventListener('click', () => {
+    let p1 = new Player(document.getElementById('p1-color').value);
+    let p2 = new Player(document.getElementById('p2-color').value);
+    new Game(p1, p2);
+});
+
+// Call the necessary functions to initialize the game board
 makeBoard();
 makeHtmlBoard();
